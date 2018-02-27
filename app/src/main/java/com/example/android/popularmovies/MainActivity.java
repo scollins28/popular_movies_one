@@ -1,5 +1,6 @@
 package com.example.android.popularmovies;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,11 +20,6 @@ public class MainActivity extends AppCompatActivity {
         gridview.setAdapter(new ImageAdapter(this));
 
         //Click listener that will in future enact the intent to load a new activity. At present it just displays a toast to signify it works.
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
     }
 

@@ -1,6 +1,7 @@
 package com.example.android.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -36,7 +37,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     //Method to create a new ImageView for each movie image
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, ViewGroup parent) {
 
         ImageView imageView;
 
@@ -54,6 +55,14 @@ public class ImageAdapter extends BaseAdapter {
         //Set imageView to be at the resource at the correspodning position in the array of images.
         //Then return the view.
         imageView.setImageResource(mThumbIds[position]);
+        imageView.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent ( mContext, DetailsActivity.class);
+                intent.putExtra( "Movie", 0 );
+                mContext.startActivity(intent);
+            }
+        } );
         return imageView;
     }
 

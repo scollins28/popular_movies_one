@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/deatils_image"
+        android:gravity="center"
+        android:src="@drawable/moveight"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placeholder title"
+        android:textAllCaps="true"
+        android:textSize="40sp"
+        android:id="@+id/details_title"/>
+
+    <RatingBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_rating"
+        android:numStars="5"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_release_date"
+        android:text="07/03/1986"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_synopsis"
+        android:text="This is a movie about something, there is just a lot of placeholder text here until the specifics can be worked out. But for now I would just really like to see if this works."
+        />
+
+</LinearLayout>
