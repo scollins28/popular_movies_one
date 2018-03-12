@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="movie_title">Movie</string>
+    <string name="menu_title">Sort by</string>
+    <string name="menu_item_one">Most Popular</string>
+    <string name="menu_item_two">Highest Rated</string>
+    <string name="pop_Sort">popular?</string>
+    <string name="rate_Sort">top_rated?</string>
+    <string name="api_Key"></string>
+    <string name="base_Query">http://api.themoviedb.org/3/movie/</string>
+
 </resources>

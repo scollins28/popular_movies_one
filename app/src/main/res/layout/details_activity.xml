@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/deatils_image"
+        android:id="@+id/details_image"
         android:gravity="center"
         android:src="@drawable/moveight"
         />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeMaxTextSize="40sp"
+        app:autoSizeStepGranularity="2sp"
         android:text="Placeholder title"
         android:textAllCaps="true"
-        android:textSize="40sp"
-        android:id="@+id/details_title"/>
+        android:id="@+id/details_title"
+        android:textColor="@color/colorAccent"
+        tools:ignore="MissingPrefix" />
 
     <RatingBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/details_rating"
-        android:numStars="5"/>
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:theme="@style/RatingBar"/>/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/details_release_date"
-        android:text="07/03/1986"/>
+        android:text="07/03/1986"
+        android:textColor="@color/colorAccent" />
 
 
     <TextView
@@ -39,6 +55,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/details_synopsis"
         android:text="This is a movie about something, there is just a lot of placeholder text here until the specifics can be worked out. But for now I would just really like to see if this works."
-        />
+        android:textColor="@color/colorAccent" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

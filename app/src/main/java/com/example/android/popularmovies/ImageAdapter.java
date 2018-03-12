@@ -8,10 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by scoll on 22/02/2018.
  */
 public class ImageAdapter extends BaseAdapter {
+
+    List<Film> imageAdapterfilms = MainActivity.sharingArrays();
 
     //Variable to hold context
     private Context mContext;
@@ -23,7 +30,7 @@ public class ImageAdapter extends BaseAdapter {
 
     //Method to return the total number of images to be contained within the GridView
     public int getCount() {
-        return mThumbIds.length;
+        return imageAdapterfilms.size();
     }
 
     //Required method, unedited from standard import
@@ -37,47 +44,41 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     //Method to create a new ImageView for each movie image
-    public View getView(int position, final View convertView, ViewGroup parent) {
-
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         ImageView imageView;
+        imageView = new ImageView( mContext );
 
-        //If there is no view that can be recycled, create new view with the following specifications.
-        if (convertView == null) {
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setPadding( 8,8,8,8 );
-        }
-        //If there is a recyclable view avialable imageView = that view.
-        else {
-            imageView = (ImageView) convertView;
-        }
+        if (position< imageAdapterfilms.size()) {
 
-        //Set imageView to be at the resource at the correspodning position in the array of images.
-        //Then return the view.
-        imageView.setImageResource(mThumbIds[position]);
-        imageView.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent ( mContext, DetailsActivity.class);
-                intent.putExtra( "Movie", 0 );
-                mContext.startActivity(intent);
+            //If there is no view that can be recycled, create new view with the following specifications.
+            if (convertView == null) {
+                imageView.setLayoutParams( new GridView.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ) );
+                imageView.setPadding( 16, 8, 16, 8 );
             }
-        } );
-        return imageView;
-    }
+            //If there is a recyclable view avialable imageView = that view.
+            else {
+                imageView = (ImageView) convertView;
+            }
 
-    //Temporary arry of images to act as placeholders until actual data is pulled through.
-    private Integer[] mThumbIds = {
-            R.drawable.movone, R.drawable.movtwo,
-            R.drawable.movthree, R.drawable.movfive,
-            R.drawable.movsix, R.drawable.movfour,
-            R.drawable.movseven, R.drawable.moveight,
-            R.drawable.movnine, R.drawable.movten,
-            R.drawable.movone, R.drawable.movtwo,
-            R.drawable.movthree, R.drawable.movfive,
-            R.drawable.movsix, R.drawable.movfour,
-            R.drawable.movseven, R.drawable.moveight,
-            R.drawable.movnine, R.drawable.movten,
-            R.drawable.movnine, R.drawable.movten,
-    };
+            //Set imageView to be at the resource at the correspodning position in the array of images.
+            //Then return the view.
+            Film currentFilm = imageAdapterfilms.get( position );
+            String moviePicassoImage = "http://image.tmdb.org/t/p/w342/".concat( currentFilm.getMovieImageUrl() );
+            Picasso.with( mContext ).load( moviePicassoImage ).into( imageView );
+
+
+            //Set the all imageViews to have an onClickListener that takes them to the placeholder Details Activity class.
+            imageView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent( mContext, DetailsActivity.class );
+                    intent.putExtra( "Position", position );
+                    mContext.startActivity( intent );
+                }
+            } );
+        }
+            //Return the ImageView to complete the function.
+            return imageView;
+
+    }
 }

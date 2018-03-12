@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/menu_title"
+    android:id="@+id/sort_by_menu"
+    >
+    <item
+        android:title="@string/menu_item_one"
+        android:id="@+id/sort_by_menu_one"
+        android:orderInCategory="1"></item>
+
+    <item
+        android:title="@string/menu_item_two"
+        android:id="@+id/sort_by_menu_two"
+        android:orderInCategory="1"></item>
+
+</menu>
