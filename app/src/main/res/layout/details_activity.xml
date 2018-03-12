@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/details_image"
         android:gravity="center"
-        android:src="@drawable/moveight"
+        android:src="@drawable/popularmovies"
         />
 
     <TextView
