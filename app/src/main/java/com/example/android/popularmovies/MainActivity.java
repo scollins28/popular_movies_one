@@ -164,7 +164,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadingScreen(true);
+        films = newFilms();
+        newConnection();
+    }
 }
 

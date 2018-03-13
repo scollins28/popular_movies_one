@@ -1,4 +1,0 @@
-#Tue Mar 13 00:06:01 GMT 2018
-base.0=C\:\\Users\\scoll\\OneDrive\\Desktop\\Udacity\\PopularMovies\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\8
-path.0=classes.dex
-renamed.0=classes.dex
