@@ -4,7 +4,7 @@ The Udacity project, Popular Movies Part One, requires the use of an API.
 Due to the terms of usage, the API key used develop the application isn't allowed to be published in a public repository. 
 In order to make the app function as intended, please create your own API key using this link -- https://www.google.com/url?q=https://www.themoviedb.org/account/signup&sa=D&ust=1520881050361000&usg=AFQjCNHK4niYdXENiXkONHF6wh68rI8_bQ
 
-Then please add your API key to the Strings.xml file, this is found under app->source->main->res->values->strings.xml. The field that needs this key is the api_Key String.
+Then please replace API_KEY under the defaultConfig section of app:build.gradle, with your API Key.
 
 Thank you and I hope you enjoy using my app.
 
