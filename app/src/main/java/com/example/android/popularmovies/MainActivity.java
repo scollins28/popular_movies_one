@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     // Variables required to be accessible outside of functions.
     private static final int MOVIE_LOADER_ID = 0;
+    private int loaderChecker = 0;
     private String moviesJSON;
     private NetworkInfo isNetworkActive;
     private static int PAGE_TO_LOAD = 0;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String sortByRating;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static List<Film> films;
+
 
 
     @Override
@@ -39,9 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         sortByPopularity = popSortQuery();
 
         //Layout is set to default open the loading screen.
-        setContentView( R.layout.loading );
-        View loadingIndicator = findViewById( R.id.loadingSpinner );
-        loadingIndicator.setVisibility(View.VISIBLE);
+        loadingScreen(true);
 
         //Attempts to load a new instance of the lists, if it connects, it will set the layout to the main activity. Otherwise it will idol on the loading screen until a connection is made.
         films = newFilms();
@@ -71,8 +71,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService( Context.CONNECTIVITY_SERVICE );
         isNetworkActive = cm.getActiveNetworkInfo();
         if (isNetworkActive != null && isNetworkActive.isConnectedOrConnecting()) {
+            if (loaderChecker>=1){
+                getLoaderManager().destroyLoader(MOVIE_LOADER_ID);
+                loaderChecker--;
+            }
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader( MOVIE_LOADER_ID, null,  this);
+            loaderChecker++;
            }
     }
 
@@ -88,27 +93,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // users to continue where they left off (once they have clicked on a poster for further film details.
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        newConnection();
-        if (isNetworkActive!=null && isNetworkActive.isConnectedOrConnecting()) {
-            int id = menuItem.getItemId();
-            if (id==R.id.sort_by_menu_one){
-                PAGE_TO_LOAD = 0;
-                moviesJSON = sortByPopularity;
-                }
-            else if (id==R.id.sort_by_menu_two){
-                PAGE_TO_LOAD= 1;
-                moviesJSON = sortByRating;
-                }
-        newFilms();
-        FilmLoader newLoader = new FilmLoader( this, moviesJSON );
-        newLoader.onStartLoading();
-        films = newLoader.loadInBackground();
-            GridView gridview = (GridView) findViewById( R.id.gridview );
-            if (gridview!=null){
-            gridview.invalidateViews();
-            gridview.setAdapter( new ImageAdapter( this ) );
-        }}
-        return super.onOptionsItemSelected(menuItem);
+        int id = menuItem.getItemId();
+        if (id==R.id.sort_by_menu_one){
+            PAGE_TO_LOAD = 0;
+            moviesJSON = sortByPopularity;
+            }
+        else if (id==R.id.sort_by_menu_two){
+            PAGE_TO_LOAD= 1;
+            moviesJSON = sortByRating;
+            }
+        loadingScreen(true);
+            films = newFilms();
+            newConnection();
+        return super.onOptionsItemSelected( menuItem );
     }
 
     //Create a new loader to generate the grid off of the main thread.
@@ -146,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
          StringBuilder stringBuilder = new StringBuilder();
          stringBuilder.append(getString(R.string.base_Query));
          stringBuilder.append(getString(R.string.pop_Sort));
-         stringBuilder.append(getString(R.string.api_Key));
+         stringBuilder.append((BuildConfig.API_KEY).toString());
          return stringBuilder.toString();
      }
 
@@ -155,9 +152,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.base_Query));
         stringBuilder.append(getString(R.string.rate_Sort));
-        stringBuilder.append(getString(R.string.api_Key));
+        stringBuilder.append((BuildConfig.API_KEY).toString());
         return stringBuilder.toString();
     }
+
+    public void loadingScreen (Boolean show){
+        if (show == true){
+            setContentView( R.layout.loading );
+            View loadingIndicator = findViewById( R.id.loadingSpinner );
+            loadingIndicator.setVisibility(View.VISIBLE);
+        }
+    }
+
+
 
 }
 

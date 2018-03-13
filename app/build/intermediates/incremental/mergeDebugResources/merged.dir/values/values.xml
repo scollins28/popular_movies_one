@@ -524,7 +524,6 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with <ns1:g example="Mail" id="application_name">%s</ns1:g></string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <string name="api_Key">api_key=83cacd48ef5c706c9ed8ad104733f17f</string>
     <string name="app_name">Popular Movies</string>
     <string name="base_Query">http://api.themoviedb.org/3/movie/</string>
     <string name="menu_item_one">Most Popular</string>

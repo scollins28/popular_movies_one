@@ -2921,17 +2921,16 @@ public final class R {
     public static final int abc_shareactionprovider_share_with=0x7f0c001a;
     public static final int abc_shareactionprovider_share_with_application=0x7f0c001b;
     public static final int abc_toolbar_collapse_description=0x7f0c001c;
-    public static final int api_Key=0x7f0c001d;
-    public static final int app_name=0x7f0c001e;
-    public static final int base_Query=0x7f0c001f;
-    public static final int menu_item_one=0x7f0c0020;
-    public static final int menu_item_two=0x7f0c0021;
-    public static final int menu_title=0x7f0c0022;
-    public static final int movie_title=0x7f0c0023;
-    public static final int pop_Sort=0x7f0c0024;
-    public static final int rate_Sort=0x7f0c0025;
-    public static final int search_menu_title=0x7f0c0026;
-    public static final int status_bar_notification_info_overflow=0x7f0c0027;
+    public static final int app_name=0x7f0c001d;
+    public static final int base_Query=0x7f0c001e;
+    public static final int menu_item_one=0x7f0c001f;
+    public static final int menu_item_two=0x7f0c0020;
+    public static final int menu_title=0x7f0c0021;
+    public static final int movie_title=0x7f0c0022;
+    public static final int pop_Sort=0x7f0c0023;
+    public static final int rate_Sort=0x7f0c0024;
+    public static final int search_menu_title=0x7f0c0025;
+    public static final int status_bar_notification_info_overflow=0x7f0c0026;
   }
   public static final class style {
     public static final int AlertDialog_AppCompat=0x7f0d0000;
