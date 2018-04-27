@@ -7,5 +7,17 @@
     <string name="pop_Sort">popular?</string>
     <string name="rate_Sort">top_rated?</string>
     <string name="base_Query">http://api.themoviedb.org/3/movie/</string>
+    <string name="findYoutubeIdQueryBuilderPartTwo">/videos?</string>
+    <string name="findYoutubeIdQueryBuilderPartOne">http://api.themoviedb.org/3/movie/</string>
+    <string name="reviewsStringBuilderOne">http://api.themoviedb.org/3/movie/</string>
+    <string name="reviewsStringBuilderTwo">/reviews?</string>
+    <string name="youtubeBaseQuery">https://www.youtube.com/watch?v=</string>
+    <string name="youtube_text_one">Play trailer one</string>
+    <string name="youtube_text_two">Play trailer two</string>
+    <string name="reviews">Reviews</string>
+    <string name="favourite_text">Favourite this film</string>
+    <string name="unfavourite_text">Unfavourite this film</string>
+    <string name="no_favs">Sorry you don\'t have any favourites yet. Try adding some now!</string>
+    <string name="no_internet">Sorry there is no internet connection</string>
 
 </resources>

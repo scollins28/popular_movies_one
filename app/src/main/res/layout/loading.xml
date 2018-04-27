@@ -20,7 +20,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/loadingSpinner"
         android:layout_centerHorizontal="true"
-        android:text="Sorry there is no internet connection"
-        android:textColor="@color/colorAccent"/>
+        android:text="@string/no_internet"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/no_internet"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loadingSpinner"
+        android:layout_centerHorizontal="true"
+        android:text="@string/no_favs"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/no_favourites"
+        android:visibility="gone"/>
 
     </RelativeLayout>

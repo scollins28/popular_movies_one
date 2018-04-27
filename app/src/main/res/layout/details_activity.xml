@@ -57,5 +57,173 @@
         android:text="This is a movie about something, there is just a lot of placeholder text here until the specifics can be worked out. But for now I would just really like to see if this works."
         android:textColor="@color/colorAccent" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <ImageButton
+        android:scaleType="centerInside"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/colorBackground"
+        android:src="@drawable/youtubebutton"
+        android:id="@+id/youtube_button_one"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/youtube_text_one"
+        android:textColor="@color/colorAccent"
+        android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:scaleType="centerInside"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/colorBackground"
+            android:src="@drawable/youtubebutton"
+            android:id="@+id/youtube_button_two"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/youtube_text_two"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/reviews_section">
+
+        <TextView
+        android:layout_width="0dp"
+        android:layout_weight="9"
+        android:layout_height="match_parent"
+        android:text="@string/reviews"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:gravity="center_vertical"
+        />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/dropdown"
+            android:paddingTop="4dp"
+            android:layout_gravity="top"
+            android:id="@+id/dropdown_arrow"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/dropdownup"
+            android:paddingTop="4dp"
+            android:layout_gravity="top"
+            android:id="@+id/dropdown_arrow_up"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/reviews_author_one"
+        android:text="XXX"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="8dp"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/reviews_review_one"
+        android:text="XXX"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="8dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/reviews_author_two"
+        android:text="XXX"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="8dp"
+        android:paddingTop="16dp"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/reviews_review_two"
+        android:text="XXX"
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="8dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/favourites_section">
+
+        <ImageButton
+            android:scaleType="centerInside"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/colorBackground"
+            android:src="@drawable/unheart"
+            android:visibility="visible"
+            android:id="@+id/unfavourite_button"/>
+
+        <ImageButton
+            android:scaleType="centerInside"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/colorBackground"
+            android:src="@drawable/heart"
+            android:visibility="gone"
+            android:id="@+id/favourite_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favourite_text"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/favourites_text"/>
+
+    </LinearLayout>
+
+
     </LinearLayout>
 </ScrollView>

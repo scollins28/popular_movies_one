@@ -13,4 +13,9 @@
         android:id="@+id/sort_by_menu_two"
         android:orderInCategory="1"></item>
 
+    <item
+        android:title="Favourites"
+        android:id="@+id/sort_by_menu_three"
+        android:orderInCategory="2"></item>
+
 </menu>
