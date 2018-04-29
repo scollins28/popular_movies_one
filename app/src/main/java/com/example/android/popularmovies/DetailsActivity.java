@@ -92,29 +92,11 @@ public class DetailsActivity extends AppCompatActivity {
         reviewsSection.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView authorOne = (TextView) findViewById( R.id.reviews_author_one);
-                TextView authorTwo = (TextView) findViewById( R.id.reviews_author_two);
-                TextView reviewOne = (TextView) findViewById( R.id.reviews_review_one);
-                TextView reviewTwo = (TextView) findViewById( R.id.reviews_review_two);
-                ImageView dropDownArrow = (ImageView) findViewById( R.id.dropdown_arrow );
-                ImageView dropDownArrowUp = (ImageView) findViewById( R.id.dropdown_arrow_up );
                 if (detailsInt==0){
-                    authorOne.setVisibility( View.VISIBLE );
-                    authorTwo.setVisibility( View.VISIBLE );
-                    reviewOne.setVisibility( View.VISIBLE );
-                    reviewTwo.setVisibility( View.VISIBLE );
-                    dropDownArrow.setVisibility( View.GONE );
-                    dropDownArrowUp.setVisibility( View.VISIBLE );
-                    detailsInt=1;
+                    revealReviews();
                 }
                 else if (detailsInt==1){
-                    authorOne.setVisibility( View.GONE);
-                    authorTwo.setVisibility( View.GONE);
-                    reviewOne.setVisibility( View.GONE);
-                    reviewTwo.setVisibility( View.GONE);
-                    dropDownArrow.setVisibility( View.VISIBLE );
-                    dropDownArrowUp.setVisibility( View.GONE );
-                    detailsInt = 0;
+                    hideReviews();
                 }
             }
         } );
@@ -154,8 +136,9 @@ public class DetailsActivity extends AppCompatActivity {
                 String youtubeFull = MainActivity.getYoutubeBaseQuery().concat( currentFilm.getMovieYoutubeOne() );
                 Intent intent = new Intent( Intent.ACTION_VIEW );
                 intent.setData( Uri.parse( youtubeFull ) );
+                if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity( intent );
-            }
+            }}
             }
         } );
 
@@ -170,8 +153,9 @@ public class DetailsActivity extends AppCompatActivity {
                     String youtubeFull = MainActivity.getYoutubeBaseQuery().concat( currentFilm.getMovieYoutubeTwo() );
                     Intent intent = new Intent( Intent.ACTION_VIEW );
                     intent.setData( Uri.parse( youtubeFull ) );
+                    if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity( intent );
-                }
+                }}
             }
         } );
     }
@@ -208,5 +192,55 @@ public class DetailsActivity extends AppCompatActivity {
         }
         cursorTwo.close();
         return 999999999;
+    }
+
+    public void revealReviews (){
+        TextView authorOne = (TextView) findViewById( R.id.reviews_author_one);
+        TextView authorTwo = (TextView) findViewById( R.id.reviews_author_two);
+        TextView reviewOne = (TextView) findViewById( R.id.reviews_review_one);
+        TextView reviewTwo = (TextView) findViewById( R.id.reviews_review_two);
+        ImageView dropDownArrow = (ImageView) findViewById( R.id.dropdown_arrow );
+        ImageView dropDownArrowUp = (ImageView) findViewById( R.id.dropdown_arrow_up );
+        authorOne.setVisibility( View.VISIBLE );
+        authorTwo.setVisibility( View.VISIBLE );
+        reviewOne.setVisibility( View.VISIBLE );
+        reviewTwo.setVisibility( View.VISIBLE );
+        dropDownArrow.setVisibility( View.GONE );
+        dropDownArrowUp.setVisibility( View.VISIBLE );
+        detailsInt=1;
+    }
+
+    public void hideReviews(){
+        TextView authorOne = (TextView) findViewById( R.id.reviews_author_one);
+        TextView authorTwo = (TextView) findViewById( R.id.reviews_author_two);
+        TextView reviewOne = (TextView) findViewById( R.id.reviews_review_one);
+        TextView reviewTwo = (TextView) findViewById( R.id.reviews_review_two);
+        ImageView dropDownArrow = (ImageView) findViewById( R.id.dropdown_arrow );
+        ImageView dropDownArrowUp = (ImageView) findViewById( R.id.dropdown_arrow_up );
+        authorOne.setVisibility( View.GONE);
+        authorTwo.setVisibility( View.GONE);
+        reviewOne.setVisibility( View.GONE);
+        reviewTwo.setVisibility( View.GONE);
+        dropDownArrow.setVisibility( View.VISIBLE );
+        dropDownArrowUp.setVisibility( View.GONE );
+        detailsInt = 0;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt( "Reviews State", detailsInt );
+        super.onSaveInstanceState( outState );
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        detailsInt = savedInstanceState.getInt( "Reviews State" );
+        if (detailsInt==1){
+            revealReviews();
+        }
+        else if (detailsInt==0) {
+        hideReviews();
+        }
+        super.onRestoreInstanceState( savedInstanceState );
     }
 }

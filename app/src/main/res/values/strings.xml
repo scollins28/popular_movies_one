@@ -4,13 +4,13 @@
     <string name="menu_title">Sort by</string>
     <string name="menu_item_one">Most Popular</string>
     <string name="menu_item_two">Highest Rated</string>
-    <string name="pop_Sort">popular?</string>
-    <string name="rate_Sort">top_rated?</string>
+    <string name="pop_Sort">popular?api_key=</string>
+    <string name="rate_Sort">top_rated?api_key=</string>
     <string name="base_Query">http://api.themoviedb.org/3/movie/</string>
-    <string name="findYoutubeIdQueryBuilderPartTwo">/videos?</string>
+    <string name="findYoutubeIdQueryBuilderPartTwo">/videos?api_key=</string>
     <string name="findYoutubeIdQueryBuilderPartOne">http://api.themoviedb.org/3/movie/</string>
     <string name="reviewsStringBuilderOne">http://api.themoviedb.org/3/movie/</string>
-    <string name="reviewsStringBuilderTwo">/reviews?</string>
+    <string name="reviewsStringBuilderTwo">/reviews?api_key=</string>
     <string name="youtubeBaseQuery">https://www.youtube.com/watch?v=</string>
     <string name="youtube_text_one">Play trailer one</string>
     <string name="youtube_text_two">Play trailer two</string>

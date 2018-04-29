@@ -1,11 +1,14 @@
 package com.example.android.popularmovies;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +19,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 import static android.view.View.VISIBLE;
 import static com.example.android.popularmovies.FavouritesDatabase.FavouritesContract.FavouritesTable.CONTENT_URI;
 import static com.example.android.popularmovies.R.layout.loading;
@@ -37,17 +43,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static String mReviewsOne;
     public static String mReviewsTwo;
     public static String mYoutubeBaseQuery;
+    public static int indexFav = 0;
+    public static int indexPop = 0;
+    public static int indexRate = 0;
+    GridView gridView;
+    int contentRetrieved;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        cursor =  getContentResolver().query(CONTENT_URI, null, null, null, null);
+        cursor = getContentResolver().query( CONTENT_URI, null, null, null, null );
         setYoutubeTwo();
         setYoutubeOne();
         setYoutubeBaseQuery();
         setReviewsOne();
         setReviewsTwo();
+
 
         //Generate the API queries using the API key. This query will not work unless an API key is added to the Strings resource directory.
         sortByRating = rateSortQuery();
@@ -77,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             final ArrayList<Film> newFilmList = new ArrayList<Film>( FilmData.extractFeaturesFromJson( moviesJSON ) );
             return newFilmList;
         } else {
+            cursor = getContentResolver().query( CONTENT_URI, null, null, null, null );
             final ArrayList<Film> newFavouriteFilms = new ArrayList<Film>( FilmData.extractFeaturesFromFavouriteFilmsCursor( cursor ) );
             return newFavouriteFilms;
         }
@@ -97,8 +110,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader( MOVIE_LOADER_ID, null, this );
             loaderChecker++;
-        }
-        else if (isNetworkActive == null){
+        } else if (isNetworkActive == null) {
             int id = R.id.sort_by_menu_three;
             PAGE_TO_LOAD = 2;
             films = newFilms();
@@ -153,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //Create a new loader to generate the grid off of the main thread.
     @Override
     public Loader<List<Film>> onCreateLoader(int i, Bundle bundle) {
+        contentRetrieved = 0;
         if (PAGE_TO_LOAD != 2) {
             return new FilmLoader( this, moviesJSON );
         } else {
@@ -167,16 +180,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Create the gridView and attach the ImageAdapter class which populates each of the images with images from the API. At present this just uses an array of placeholders.
         if (films.size() != 0) {
             setContentView( R.layout.activity_main );
-            GridView gridview = (GridView) findViewById( R.id.gridview );
-            gridview.setAdapter( new ImageAdapter( this ) );
+            gridView = (GridView) findViewById( R.id.gridview );
+            gridView.setAdapter( new ImageAdapter( this ) );
         } else if (PAGE_TO_LOAD == 2 && films.size() == 0) {
             setContentView( loading );
             TextView noFavs = (TextView) findViewById( R.id.no_favourites );
             TextView noInternet = (TextView) findViewById( R.id.no_internet );
             noFavs.setVisibility( VISIBLE );
             noInternet.setVisibility( View.GONE );
-
         }
+        contentRetrieved = 1;
     }
 
     //Standard loaderReset function.
@@ -263,10 +276,155 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     protected void onStart() {
-        super.onStart();
+        if (contentRetrieved==1){
+            onResume();
+        }
+        else {
+        contentRetrieved = 0;
         loadingScreen( true );
         films = newFilms();
         newConnection();
+        }
+        super.onStart();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (films.isEmpty()!=true){
+        outState.putParcelableArrayList( "Films To Persist", new ArrayList<Film>( films ) );
+        switch (PAGE_TO_LOAD) {
+            case 0:
+                indexPop = gridView.getLastVisiblePosition();
+                outState.putInt( "Index", indexPop );
+                outState.putInt( "Page To Load", PAGE_TO_LOAD );
+                break;
+            case 1:
+                indexRate = gridView.getFirstVisiblePosition();
+                outState.putInt( "Index", indexRate);
+                outState.putInt( "Page To Load", PAGE_TO_LOAD );
+                break;
+            case 2:
+                indexFav = gridView.getFirstVisiblePosition();
+                outState.putInt( "Index", indexFav);
+                outState.putInt( "Page To Load", PAGE_TO_LOAD );
+                break;
+        }}
+        super.onSaveInstanceState( outState );
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState( savedInstanceState );
+        List<Film> restoreFilms = savedInstanceState.getParcelableArrayList( "Films To Persist" );
+        if (restoreFilms.isEmpty() != true) {
+            films = savedInstanceState.getParcelableArrayList( "Films To Persist" );
+            if (films.size() != 0) {
+                setContentView( R.layout.activity_main );
+                gridView = (GridView) findViewById( R.id.gridview );
+                gridView.setAdapter( new ImageAdapter( this ) );
+            } else if (PAGE_TO_LOAD == 2 && films.size() == 0) {
+                setContentView( loading );
+                TextView noFavs = (TextView) findViewById( R.id.no_favourites );
+                TextView noInternet = (TextView) findViewById( R.id.no_internet );
+                noFavs.setVisibility( VISIBLE );
+                noInternet.setVisibility( View.GONE );
+            }
+            int loadPage = savedInstanceState.getInt( "PAGE_TO_LOAD" );
+            switch (loadPage) {
+                case 0:
+                    int orientation = this.getResources().getConfiguration().orientation;
+                    int newIndex = 0;
+                    indexPop = savedInstanceState.getInt( "Index" );
+                    if (orientation==2){
+                        if (indexPop<=4){
+                            newIndex = 0;
+                        }
+                        else if (indexPop>=5){
+                            newIndex = indexPop-5;
+                        }
+                    } else if (orientation==1){
+                        if (indexPop<=6){
+                            newIndex = 0;
+                        }
+                        else if (indexPop>=7){
+                            newIndex = indexPop-3;
+                        }
+                }
+                    gridView.setSelection( newIndex );
+                    break;
+                case 1:
+                    indexRate = savedInstanceState.getInt( "Index" );
+                    gridView.setSelection( indexRate );
+                    break;
+                case 2:
+                    indexFav = savedInstanceState.getInt( "Index" );
+                    gridView.setSelection( indexFav );
+                    break;
+            }
+        }
+        else {onStart();}
+        }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        List<Film> restoreFilms = FilmData.filmsForImageAdapter;
+        if (restoreFilms.isEmpty() != true) {
+            films = restoreFilms;
+            if (films.size() != 0) {
+                setContentView( R.layout.activity_main );
+                gridView = (GridView) findViewById( R.id.gridview );
+                gridView.setAdapter( new ImageAdapter( this ) );
+            } else if (PAGE_TO_LOAD == 2 && films.size() == 0) {
+                setContentView( loading );
+                TextView noFavs = (TextView) findViewById( R.id.no_favourites );
+                TextView noInternet = (TextView) findViewById( R.id.no_internet );
+                noFavs.setVisibility( VISIBLE );
+                noInternet.setVisibility( View.GONE );
+            }
+            switch (PAGE_TO_LOAD) {
+                case 0:
+                    int orientation = this.getResources().getConfiguration().orientation;
+                    int newIndex = 0;
+                    if (orientation==2){
+                        if (indexPop<=4){
+                            newIndex = 0;
+                        }
+                        else if (indexPop>=5){
+                            newIndex = indexPop-5;
+                        }
+                    } else if (orientation==1){
+                        if (indexPop<=6){
+                            newIndex = 0;
+                        }
+                        else if (indexPop>=7){
+                            newIndex = indexPop-3;
+                        }
+                    }
+                    gridView.setSelection( newIndex );
+                    break;
+                case 1:
+                    gridView.setSelection( indexRate );
+                    break;
+                case 2:
+                    PAGE_TO_LOAD = 2;
+                    films = newFilms();
+                    if (loaderChecker >= 1) {
+                        getLoaderManager().destroyLoader( MOVIE_LOADER_ID );
+                        loaderChecker--;
+                    }
+                    LoaderManager loaderManager = getLoaderManager();
+                    loaderManager.initLoader( MOVIE_LOADER_ID, null, this );
+                    loaderChecker++;
+                    gridView.setSelection( indexFav );
+                    break;
+            }
+        }
+        else {onStart();}
+        super.onResume();
     }
 }
-
